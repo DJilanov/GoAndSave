@@ -1,0 +1,42 @@
+<div class="container">
+<div class="center-logo text-center">
+	<a>
+		<img class="fourhundred-brand tiny-top-margin" [src]="imageLogo" />
+	</a>
+</div>
+<div class="container remove-padding-sides">
+	<div class="row remove-row-margins medium-top-margin">
+		<!--<label for="email-field">Email</label>-->
+		<input type="email" class="form-control white" id="email-field" [(ngModel)]="userEmail" placeholder="Email address" i18n-placeholder>
+	</div>
+	<div class="row remove-row-margins">
+		<!--<label for="password-field">Password</label>-->
+		<input type="password" class="form-control white" id="password-field" [(ngModel)]="userPassword" placeholder="Password" i18n-placeholder>
+	</div>
+	<div class="text-center" role="alert" *ngIf="displayError">
+		<div class="tooltip-error"><label>{{displayError}}</label></div>
+	</div>
+	<div class="row remove-row-margins hidden">
+		<!--hidden until implementation-->
+		Log in via FB G+
+	</div>
+
+	<div class="row remove-row-margins medium-top-margin text-center">
+		<div class="col-xs-4 col-sm-5 text-right checkbox-negative-margin">
+			<input type="checkbox" name="checkbox" id="remember_me" class="white" value="value" [(ngModel)]="rememberPassword">
+			<label for="remember_me"></label>
+		</div>
+		<div class="col-xs-8 col-sm-7 text-left checkbox-text">
+			<span i18n class="white" i18n>Keep me logged in</span>
+		</div>
+	</div>
+
+	<button class="btn btn-default fourhundred center-block medium-top-margin white-btn" (click)="onLoginClicked()" i18n>Log in</button>
+
+
+	<div class="row remove-row-margins medium-top-margin small-bottom-margin white">
+		<small class="center-block text-center" routerLink="/forgotpassword" style="cursor: pointer" i18n>Forgot your password?</small>
+	</div>
+</div>
+</div>
+

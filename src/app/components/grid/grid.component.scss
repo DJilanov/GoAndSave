@@ -1,0 +1,15 @@
+@import '../../../variables';
+
+:host {
+	flex: 1;
+}
+
+.email {
+	height: 6rem;
+	width: 7rem;
+	background: url(../../../assets/icons/envelope.png) center / contain no-repeat;
+}
+
+.push-down {
+	margin-top: 6rem;
+}

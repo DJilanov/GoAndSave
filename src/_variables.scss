@@ -1,0 +1,119 @@
+//Colors
+$fourhundred-base-dark1: #010101; // Accent grey
+$fourhundred-base-dark2: #252525; // Charcoal
+$fourhundred-base-grey1: #7f7f7f; // Inactive grey
+$fourhundred-base-grey2: #999999; // Disabled
+$fourhundred-base-grey3: #efefef; // Soft grey
+$fourhundred-base-grey4: #dddddd; // Slightly darker soft grey
+$fourhundred-base-black: #000000; // Black
+$fourhundred-base-white: #ffffff; // White
+$fourhundred-background-grey: #F7F7F7; // Signup/dashboard grey
+$fourhundred-accent1: #0078ff; // Sky blue
+$fourhundred-accent2: #00e4ff; // Electric blue
+
+$fourhundred-input-focus: #0090ff; // Input focus blue
+
+$fourhundred-dropdown-border: #4B4E53; // Dropdown gray
+$fourhundred-dropdown-active: #0090FF; // Dropdown active blue
+
+$fourhundred-success: #22c064; //Success green
+$fourhundred-alert: #c02235; //Alert red
+
+$fourhundred-backdrop-color: rgba(0,0,0,0.6);
+
+// Max width
+$max-width-desktop: 800px;
+
+// BASE FONT SIZES, all rem units scale from these
+$body-font-size: 17px;
+$body-font-size-desktop: 22px;
+
+// Fonts
+$headers-font-family: 'futura-pt', sans-serif;
+$headers-font-weight: 600;
+$headers2-font-family: 'futura-pt', sans-serif;
+$headers2-font-weight: 400;
+$headers3-font-family: 'futura-pt', sans-serif;
+$headers3-font-weight: 500;
+$buttons-font-family: 'Roboto Medium', sans-serif;
+$body-font-family: 'Roboto Light', sans-serif;
+$label-font-family: 'Roboto Medium', sans-serif;
+$thin-font-family: 'Roboto Thin', sans-serif;
+
+$h1-font-size: 2.94rem; //11.6vw; //87px;
+$h2-font-size: 1.41rem; //6.4vw; //48px;
+$h3-font-size: 1.12rem;//5vw; //38px;
+$button-font-size: 0.88rem; //4vw; //30px;
+$label-font-size: 0.71rem; //3.2vw; //24px;
+
+// Inputs config
+$input-height: 2.21rem; //10.5vw;//75px;
+$input-border-color: $fourhundred-base-grey1;
+$input-border: 1px solid $input-border-color;
+$input-background: $fourhundred-base-white;
+$input-error-color: $fourhundred-alert;
+$input-success-color: $fourhundred-success;
+$input-focus-color: $fourhundred-input-focus;
+$input-font-size: 1rem; //4.5vw; //34px;
+$input-margin-bottom: 0.6rem; //20px;
+$input-margin: 0 0 $input-margin-bottom 0;
+$input-padding: 0;
+$label-font-size: $label-font-size;
+$input-disabled-color: rgba(0,0,0, .26);
+$input-disabled-solid-color: $fourhundred-base-grey2;
+$input-disabled-border: 1px dotted $input-disabled-color;
+$input-invalid-border: 1px solid $input-error-color;
+$placeholder-text-color: $fourhundred-base-grey1;
+
+// Buttons config
+$base-button-size: 2.353rem; //10.6vw; //80px;
+$base-button-border: 1.176rem; //5.3vw; //40px;
+$base-button-exclusion: 1.647rem; //7.3vw; //55px;
+
+// Menu
+$menu-height: 70px;
+
+// Other margins
+$big-margin: 4.352rem;
+$medium-margin: 2.176rem;
+$small-margin: 1.088rem;
+$tiny-margin: 0.5rem;
+
+$login-phone-portrait: '/assets/icons/login-phone-portrait.png';
+$login-phone-landscape: '/assets/icons/login-phone-landscape.png';
+$login-retina: '/assets/icons/login-retina.png';
+$login-normal: '/assets/icons/login-normal.png';
+
+$checkbox-uncheck-black: '/assets/icons/circle-black.png';
+$checkbox-uncheck-white: '/assets/icons/circle-white.png';
+$checkbox-check-white: '/assets/icons/check-white.png';
+$checkbox-uncheck-blue: '/assets/icons/circle-blue.png';
+$checkbox-check-blue: '/assets/icons/check-blue.png';
+$circle-check-green: '/assets/icons/check-green.png';
+
+$circle-black-filled: '/assets/icons/circle-black-filled.png';
+$circle-blue-filled: '/assets/icons/circle-blue-filled.png';
+
+$timeline-current-possition: '/assets/icons/timeline_animation.gif';
+
+$calendar: '/assets/icons/calendar.png';
+
+$gas-primary-gradient-color-start: #80A1FF;
+$gas-primary-gradient-color-end: #C1B3FB;
+$gas-secondary-gradient-color-start: #CCDAFF;
+$gas-secondary-gradient-color-end: #EFEDFD;
+$electricity-primary-gradient-color-start: #F5C483;
+$electricity-primary-gradient-color-end: #FADA8E;
+
+$where-money-goes-green-begin: #00CA9D;
+$where-money-goes-green-end: #77E1AF;
+$where-money-goes-yellow: #E7B64F;
+$where-money-goes-red: #E16C5A;
+$where-money-goes-purple: #7B60E3;
+$where-money-goes-blue: #347CC4;
+
+@mixin linearGradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
