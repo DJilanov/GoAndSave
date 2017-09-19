@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../../services/backend.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-login',
@@ -7,7 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent {
 
+	userName;
+	userPassword;
+	showError;
 	constructor(
+		private router: Router,
+		private backendService: BackendService
 	) {
+
+	}
+
+	onLoginClicked() {
+		this.backendService.login(this.userName, this.userPassword).then((response) => {
+			if(response.status !== 400) {
+				this.router.navigate(['/grid']);
+			} else {
+				this.showError = true;
+			}
+		})
 	}
 }

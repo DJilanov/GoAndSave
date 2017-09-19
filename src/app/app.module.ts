@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { GridComponent } from './components/grid/grid.component';
+import { GridContainerComponent } from './components/grid-container/grid-container.component';
+import { AddCompanyComponent } from './components/add-company/add-company.component';
+import { AddТоCompanyComponent } from './components/add-to-company/add-to-company.component';
 
 // Import services
 import { Config } from './services/config';
@@ -18,7 +21,11 @@ import { BackendService } from './services/backend.service';
 @NgModule({
 	declarations: [
 		AppComponent,
+		GridComponent,
 		LoginComponent,
+		AddCompanyComponent,
+		AddТоCompanyComponent,
+		GridContainerComponent
 	],
 	imports: [
 		AppRoutingModule,

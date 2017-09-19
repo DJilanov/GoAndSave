@@ -1,16 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import { Config } from './config';
 
 @Injectable()
 export class BackendService {
+	userData = {
+		username: null,
+		password: null
+	}
 
-	constructor(private http: Http) { }
+	constructor(
+		private http: Http
+	) { 
 
-	getPlaceFromCoordinates(latitude, longitude): Promise<any> {
+	}
+
+	isLogged() {
+		return this.userData.username;
+	}
+
+	getUserData() {
+		return this.userData;
+	}
+
+	login(username, password): Promise<any> {
 		return this.http
-			.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}`)
+			.post(Config.loginUrl , {
+				username: username,
+				password: password
+			})
 			.toPromise()
-			.then(response => response.json());
+			.then((response) => {
+				if(response.status !== 400) {
+					this.userData = {
+						username: username,
+						password: password
+					}
+				}
+				return response.json()
+			});
 	}
 }
