@@ -1,11 +1,73 @@
-<div class="container">
-	<input type="file" (change)="onFileChange($event)" multiple="false" />
-	<table class="sjs-table">
-		<tr *ngFor="let row of data">
-			<td *ngFor="let val of row">
-				{{val}}
-			</td>
-		</tr>
-	</table>
-	<button (click)="export()">Export!</button>
+<div class="panel-heading">
+	<div class="panel-title text-center">
+		<h1 class="title">Add new company</h1>
+		<hr />
+	</div>
+</div> 
+<div class="main-login main-center">
+	<form class="form-horizontal" method="post" action="#">
+		
+		<div class="form-group">
+			<label for="id" class="cols-sm-2 control-label">Brand Name</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="id" [disabled]="disableCompany"
+						type="text" class="form-control" name="id" id="id"  placeholder="Enter your brand name"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="brandDefaultRadius" class="cols-sm-2 control-label">Brand default radius</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="brandDefaultRadius" [disabled]="disableCompany"
+						type="text" class="form-control" name="brandDefaultRadius" id="brandDefaultRadius"  placeholder="Enter your brand default radius"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="logoFile" class="cols-sm-2 control-label">Upload brand image</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="logoFile" [disabled]="disableCompany"
+						type="file" class="form-control" name="logoFile" id="logoFile"  placeholder="Upload your brand image"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="notificationDefaultTitle" class="cols-sm-2 control-label">Brand default notification title</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="notificationDefaultTitle" [disabled]="disableCompany"
+						type="text" class="form-control" name="notificationDefaultTitle" id="notificationDefaultTitle"  placeholder="Enter your brand default title"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="notificationDefaultBody" class="cols-sm-2 control-label">Brand default notification body</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="notificationDefaultBody" [disabled]="disableCompany"
+						type="text" class="form-control" name="notificationDefaultBody" id="notificationDefaultBody"  placeholder="Enter your brand default body"/>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="form-group ">
+			<button [disabled]="disableCompany" (click)="updateCompany()"
+				type="button" class="btn btn-primary btn-lg btn-block login-button">Use Data</button>
+			<button [disabled]="!disableCompany" (click)="enableEdit()"
+				type="button" class="btn btn-primary btn-lg btn-block login-button">Change Data</button>
+		</div>
+	</form>
 </div>

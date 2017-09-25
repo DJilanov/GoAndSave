@@ -1,11 +1,23 @@
 <div class="container">
-	<input type="file" (change)="onFileChange($event)" multiple="false" />
-	<table class="sjs-table">
-		<tr *ngFor="let row of data">
-			<td *ngFor="let val of row">
-				{{val}}
-			</td>
-		</tr>
-	</table>
-	<button (click)="export()">Export!</button>
+	<input type="file" (change)="onFileChange($event)" multiple="false" class="btn btn-primary btn-lg btn-block" />
+	<div *ngIf="excelData[0]">
+		<table class="sjs-table">
+			<tr>
+				<th>Store Name</th>
+				<th>Store Radius</th>
+				<th>Store Logo</th>
+				<th>Notification Title</th>
+				<th>Notification Body</th>
+			</tr>
+			<tr *ngFor="let row of excelData">
+				<td *ngFor="let val of row">
+					{{val}}
+				</td>
+				 <td (click)="remove(row[0])">
+					Change Store Logo
+				</td> 
+			</tr>
+		</table>
+		<button (click)="export()" class="btn btn-primary btn-lg btn-block export">Export to back-end!</button>
+	</div>
 </div>

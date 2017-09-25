@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./grid-container.component.scss']
 })
 export class GridContainerComponent {
+
 	constructor(
 		private router: Router,
 		private backendService: BackendService

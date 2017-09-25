@@ -41,4 +41,29 @@ export class BackendService {
 				return response.json()
 			});
 	}
+
+	fetchCompanies() {
+		return this.http
+			.post(Config.companiesUrl , {
+				username: this.userData.username,
+				password: this.userData.password
+			})
+			.toPromise()
+			.then((response) => {
+				return response.json()
+			});
+	}
+
+	uploadData(data) {
+		return this.http
+			.post(Config.postDataUrl , {
+				username: this.userData.username,
+				password: this.userData.password,
+				data: data
+			})
+			.toPromise()
+			.then((response) => {
+				return response.json()
+			});
+	}
 }

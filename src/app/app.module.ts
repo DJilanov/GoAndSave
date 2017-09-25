@@ -17,6 +17,8 @@ import { AddТоCompanyComponent } from './components/add-to-company/add-to-comp
 import { Config } from './services/config';
 import { XlsxService } from './services/XLSX.service';
 import { BackendService } from './services/backend.service';
+import { EventBusService } from './services/event-bus.service';
+import { ExcelDataService } from './services/excel-data.service';
 
 @NgModule({
 	declarations: [
@@ -37,7 +39,9 @@ import { BackendService } from './services/backend.service';
 	providers: [
 		Config,
 		XlsxService,
-		BackendService
+		BackendService,
+		EventBusService,
+		ExcelDataService
 	],
 	bootstrap: [AppComponent]
 })

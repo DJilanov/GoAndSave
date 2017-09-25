@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EventBusService } from './event-bus.service';
 
 import * as XLSX from 'xlsx';
 
@@ -21,7 +22,9 @@ export class XlsxService {
 	wopts: XLSX.WritingOptions = { bookType:'xlsx', type:'binary' };
 	fileName: string = "";
 
-	constructor() { }
+	constructor(
+		private eventBusService: EventBusService
+	) { }
 
 	onFileChange(evt: any) {
 		/* wire up file reader */
@@ -39,6 +42,7 @@ export class XlsxService {
 
 			/* save data */
 			this.data = <AOA>(XLSX.utils.sheet_to_json(ws, {header:1}));
+			this.eventBusService.emitNewExcelData(this.data);
 		};
 		reader.readAsBinaryString(target.files[0]);
 	}
