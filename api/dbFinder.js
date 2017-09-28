@@ -65,8 +65,6 @@
     }
 
     module.exports = {
-        findUser: findUser,
-        setCache: setCache,
-        returnAllUsers: returnAllUsers
+        setCache: setCache
     };
 }());

@@ -13,8 +13,8 @@ export class GridContainerComponent {
 		private router: Router,
 		private backendService: BackendService
 	) {
-		// if(!backendService.isLogged()) {
-		// 	router.navigate(['/login']);
-		// }
+		if(!backendService.isLogged()) {
+			router.navigate(['/login']);
+		}
 	}
 }

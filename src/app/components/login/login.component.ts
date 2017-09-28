@@ -11,7 +11,7 @@ export class LoginComponent {
 
 	userName;
 	userPassword;
-	showError;
+	showError = false;
 	constructor(
 		private router: Router,
 		private backendService: BackendService
@@ -20,12 +20,12 @@ export class LoginComponent {
 	}
 
 	onLoginClicked() {
-		this.backendService.login(this.userName, this.userPassword).then((response) => {
-			if(response.status !== 400) {
+		this.backendService.login(this.userName, this.userPassword)
+			.then((response) => {
 				this.router.navigate(['/grid']);
-			} else {
+			})
+			.catch((error => {
 				this.showError = true;
-			}
-		})
+			}))
 	}
 }

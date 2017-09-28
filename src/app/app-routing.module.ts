@@ -3,13 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './components/login/login.component';
 import { GridContainerComponent } from './components/grid-container/grid-container.component';
+import { EditNotificationsComponent } from './components/edit-notifications/edit-notifications.component';
 
 const routes: Routes = [
-	// {
-	// 	path: '',
-	// 	redirectTo: '/login',
-	// 	pathMatch: 'full'
-	// },
+	{
+		path: '',
+		redirectTo: '/login',
+		pathMatch: 'full'
+	},
 	{
 		path: 'login',
 		component: LoginComponent
@@ -17,6 +18,10 @@ const routes: Routes = [
 	{
 		path: 'grid',
 		component: GridContainerComponent
+	},
+	{
+		path: 'edit',
+		component: EditNotificationsComponent
 	}
 ];
 

@@ -127,7 +127,7 @@
      */
     function handleCallback(err, res, response, operation) {
         if(!err) {
-            cache.changeUsers(response, operation);
+            cache.changeCompanies(response, operation);
             returnSuccess(res, response);
         } else {
             returnProblem(err, res);
@@ -170,7 +170,7 @@
             console.log('[dbConnector]Mongoose default connection open');
             mongoose.connection.db.collection('users', function(err, collection) {
                 collection.find().toArray(function(err, users) {
-                    cache.setUsers(users);
+                    cache.setCompanies(users);
                 });
             });
         });
@@ -199,9 +199,6 @@
 
     module.exports = {
         setCache: setCache,
-        connectDb: connectDb,
-        createUser: createUser,
-        updateUser: updateUser,
-        deleteUser: deleteUser
+        connectDb: connectDb
     };
 }());

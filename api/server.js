@@ -52,15 +52,45 @@ app.get('/api/heartbeat', function(req, res) {
 });
 // when we call from the service we return the users
 app.post('/api/loginUrl', function(req, res) {
-    dbFinder.returnAllCompanies(req, res);
+    if(validator.validateLogin(req.body)) {
+        res.status(200).json({
+            success: true
+        });
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
 });
 // when we call from the service we return the companies
 app.post('/api/companiesUrl', function(req, res) {
-    dbFinder.returnAllCompanies(req, res);
+    if(validator.validateLogin(req.body)) {
+        dbFinder.returnAllCompanies(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
 });
-// when we call from the service we add the sended user
+// when we call from the service we return the notifications
+app.post('/api/notificationsUrl', function(req, res) {
+    if(validator.validateLogin(req.body)) {
+        dbFinder.returnAllCompanies(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
+});
+// when we call from the service we add the sended notifications
 app.post('/api/postDataUrl', function(req, res) {
-    dbUpdator.createUser(req, res);
+    if(validator.validateLogin(req.body)) {
+        dbFinder.returnAllCompanies(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
 });
 
 console.log('Server is UP at ' + port);

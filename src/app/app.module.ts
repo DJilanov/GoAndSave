@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { GridComponent } from './components/grid/grid.component';
+import { EditNotificationsComponent } from './components/edit-notifications/edit-notifications.component';
+import { HeaderComponent } from './components/header/header.component';
 import { GridContainerComponent } from './components/grid-container/grid-container.component';
 import { AddCompanyComponent } from './components/add-company/add-company.component';
 import { AddТоCompanyComponent } from './components/add-to-company/add-to-company.component';
@@ -25,9 +27,11 @@ import { ExcelDataService } from './services/excel-data.service';
 		AppComponent,
 		GridComponent,
 		LoginComponent,
+		HeaderComponent,
 		AddCompanyComponent,
 		AddТоCompanyComponent,
-		GridContainerComponent
+		GridContainerComponent,
+		EditNotificationsComponent		
 	],
 	imports: [
 		AppRoutingModule,

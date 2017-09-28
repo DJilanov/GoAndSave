@@ -25,10 +25,18 @@
     function validateEmail(email) {
         return emailRegex.test(email)
     }
+    /**
+     * @validateEmail it returns boolean for is it correct email or no
+     * @email {email} The user written email
+     */
+    function validateLogin(data) {
+        return data.username == config.username && data.password == config.password
+    }
 
     module.exports = {
         validateDate: validateDate,
         validateEmail: validateEmail,
-        validateString: validateString
+        validateString: validateString,
+        validateLogin: validateLogin
     };
 }());

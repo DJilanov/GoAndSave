@@ -1,0 +1,14 @@
+<app-header></app-header>
+<div class="container">
+	<div class="panel-heading">
+		<div class="panel-title text-center">
+			<h1 class="title">Edit notifications</h1>
+			<hr />
+		</div>
+	</div> 
+	<label for="brandSelect">Select brand</label>
+	<select name="brandSelect" [(ngModel)]="selectedValue" (ngModelChange)="onSelect($event)">
+		<option selected value="null"> None from the listed </option>
+		<option *ngFor="let c of companies" [ngValue]="c">{{c.brandName}}</option>
+	</select>
+</div>
