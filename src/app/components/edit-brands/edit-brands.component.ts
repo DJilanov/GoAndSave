@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { CachingService } from '../../services/caching.service';
 import { BackendService } from '../../services/backend.service';
 import { EventBusService } from '../../services/event-bus.service';
 
 @Component({
-	selector: 'app-edit-notifications',
-	templateUrl: './edit-notifications.component.html',
-	styleUrls: ['./edit-notifications.component.scss']
+	selector: 'app-brands-stores',
+	templateUrl: './edit-brands.component.html',
+	styleUrls: ['./edit-brands.component.scss']
 })
-export class EditNotificationsComponent {
+export class EditBrandsComponent {
 
 	public selectedCompany = null;
 
@@ -31,12 +32,17 @@ export class EditNotificationsComponent {
 	];
 
 	constructor(
+		private cachingService: CachingService,
 		private backendService: BackendService,
 		private eventBusService: EventBusService
 	) {
-		this.backendService.fetchCompanies().then(response =>{
-			this.companies = response;
-		});
+		this.companies = this.cachingService.getCompanies();
+		if(!this.companies.length) {
+			this.backendService.fetchCompanies().then(response =>{
+				this.companies = response;
+				this.cachingService.setCompanies(response);
+			});
+		}
 	}
 
 	onSelect(company) {

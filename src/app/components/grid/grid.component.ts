@@ -1,4 +1,5 @@
 ﻿import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { XlsxService } from '../../services/XLSX.service';
 import { BackendService } from '../../services/backend.service';
 import { EventBusService } from '../../services/event-bus.service';
@@ -16,6 +17,7 @@ export class GridComponent {
 	public companyData: Object = {};
 
 	constructor(
+		private router: Router,
 		private xlsxService: XlsxService,
 		private backendService: BackendService,
 		private eventBusService: EventBusService,

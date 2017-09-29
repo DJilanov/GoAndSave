@@ -4,11 +4,11 @@ import { BackendService } from '../../services/backend.service';
 import { EventBusService } from '../../services/event-bus.service';
 
 @Component({
-	selector: 'app-add-to-company',
-	templateUrl: './add-to-company.component.html',
-	styleUrls: ['./add-to-company.component.scss']
+	selector: 'app-edit-stores',
+	templateUrl: './edit-stores.component.html',
+	styleUrls: ['./edit-stores.component.scss']
 })
-export class AddТоCompanyComponent {
+export class EditStoresComponent {
 
 	public selectedCompany = null;
 

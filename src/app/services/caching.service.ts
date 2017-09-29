@@ -13,11 +13,14 @@ export class CachingService {
     constructor(
         private eventBusService: EventBusService
     ) {
-        this.eventBusService.excelDataEmitter.subscribe((data) => this.resetExcelData());
+        // this.eventBusService.excelDataEmitter.subscribe((data) => this.resetExcelData());
     }
 
-    public resetExcelData() {
-        this.companies = []
-        this.eventBusService.emitExcelDataChange(this.companies);
+    public getCompanies() {
+        return this.companies;
+    }
+
+    public setCompanies(companies) {
+        this.companies = companies;
     }
 }

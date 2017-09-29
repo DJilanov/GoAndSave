@@ -3,7 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './components/login/login.component';
 import { GridContainerComponent } from './components/grid-container/grid-container.component';
-import { EditNotificationsComponent } from './components/edit-notifications/edit-notifications.component';
+import { EditBrandsComponent } from './components/edit-brands/edit-brands.component';
+import { EditStoresComponent } from './components/edit-stores/edit-stores.component';
+import { AnalyticsComponent } from './components/analytics/analytics.component';
 
 const routes: Routes = [
 	{
@@ -20,9 +22,22 @@ const routes: Routes = [
 		component: GridContainerComponent
 	},
 	{
-		path: 'edit',
-		component: EditNotificationsComponent
-	}
+		path: 'edit-brands',
+		component: EditBrandsComponent
+	},
+	{
+		path: 'edit-stores',
+		component: EditStoresComponent
+	},
+	{
+		path: 'analytics',
+		component: AnalyticsComponent
+	},
+	{
+		path: '**',
+		redirectTo: '/login',
+		pathMatch: 'full'
+	},
 ];
 
 @NgModule({
