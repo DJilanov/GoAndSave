@@ -168,9 +168,19 @@
        // we cache the product list when we open the back-end for faster working speed
         mongoose.connection.on('connected', function() {
             console.log('[dbConnector]Mongoose default connection open');
-            mongoose.connection.db.collection('users', function(err, collection) {
+            mongoose.connection.db.collection('brands', function(err, collection) {
                 collection.find().toArray(function(err, users) {
-                    cache.setCompanies(users);
+                    cache.setBrands(users);
+                });
+            });
+            mongoose.connection.db.collection('stores', function(err, collection) {
+                collection.find().toArray(function(err, users) {
+                    cache.setStores(users);
+                });
+            });
+            mongoose.connection.db.collection('analytics', function(err, collection) {
+                collection.find().toArray(function(err, analytics) {
+                    cache.setAnalytics(analytics);
                 });
             });
         });

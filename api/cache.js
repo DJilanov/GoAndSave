@@ -4,23 +4,55 @@
  * back-end we wont be able to cache the info for skiping database calls
  */
 (function() {
-    var companies = [];
+    let brands = [];
+    let stores = [];
+    let analytics = [];
     /**
-     * @getProducts it returns all of the companies that are currently cached
+     * @getBrands it returns all of the companies that are currently cached
      */
-    function getCompanies() {
-        return companies;
+    function getBrands() {
+        return brands;
     }
     /**
-     * @setCompanies it sets companies to the cache
-     * @newCompany <newCompany[]> the new companies array
+     * @setBrands it sets companies to the cache
+     * @Array <newBrand[]> the new companies array
      */
-    function setCompanies(newCompany) {
-        companies = newCompany;
+    function setBrands(newBrand) {
+        brands = newBrand;
+    }
+    /**
+     * @getStores it returns all of the stores that are currently cached
+     */
+    function getStores() {
+        return brands;
+    }
+    /**
+     * @setStores it sets stores to the cache
+     * @Array <newStore[]> the new stores array
+     */
+    function setStores(newStore) {
+        stores = newStore;
+    }
+    /**
+     * @getBrands it returns all of the analytics that are currently cached
+     */
+    function getAnalytics() {
+        return analytics;
+    }
+    /**
+     * @setAnalytics it sets analytics to the cache
+     * @Array <newAnalytic[]> the new analytics array
+     */
+    function setAnalytics(newAnalytic) {
+        analytics = newAnalytic;
     }
 
     module.exports = {
-        getCompanies: getCompanies,
-        setCompanies: setCompanies
+        getBrands: getBrands,
+        setBrands: setBrands,
+        getStores: getStores,
+        setStores: setStores,
+        getAnalytics: getAnalytics,
+        setAnalytics: setAnalytics
     };
 }());

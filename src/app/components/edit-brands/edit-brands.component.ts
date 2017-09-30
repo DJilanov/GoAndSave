@@ -46,6 +46,6 @@ export class EditBrandsComponent {
 	}
 
 	onSelect(company) {
-		this.eventBusService.emitCompanySelectChange(company);
+		
 	}
 }
