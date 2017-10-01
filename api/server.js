@@ -82,6 +82,16 @@ app.post('/api/updateBrand', function(req, res) {
         });
     }
 });
+// when we call from the service we delete the brand
+app.post('/api/deleteBrand', function(req, res) {
+    if(validator.validateLogin(req.body)) {
+        dbUpdator.deleteBrand(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
+});
 // when we call from the service we return the stores
 app.post('/api/getStores', function(req, res) {
     if(validator.validateLogin(req.body)) {

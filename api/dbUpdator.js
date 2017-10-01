@@ -31,6 +31,80 @@
     }
 
     /**
+     * @createBrand creates new brand and send it to the db
+     * @req {Object} The query from the front-end
+     * @res {Object} The res to the front-end
+     */
+    function createBrand(req, res) {
+        let body = req.body;
+        let update = buildBrandData(body.brand);
+        
+        mongoose.connection.db.collection('brands', function(err, collection) {
+            if(!collection) {
+                return;
+            }
+            // return data about the new brand
+            collection.insertOne(update, (err, docs) => {
+                if(!err) {
+                    cache.addBrand(update);
+                    returnSuccess(res, update);
+                } else {
+                    returnProblem(res, err);
+                }
+            });
+        });
+    }
+
+    /**
+     * @updateStore updates brand and send it to the db
+     * @req {Object} The query from the front-end
+     * @res {Object} The res to the front-end
+     */
+    function updateBrand(req, res) {
+        let body = req.body;
+        let query = buildQuery(body.brand._id);
+        let update = buildBrandData(body.brand);
+        mongoose.connection.db.collection('brands', function(err, collection) {
+            if(!collection) {
+                return;
+            }
+            collection.update(query, update, (err, docs) => {
+                if(!err) {
+                    cache.updateBrand(body.brand._id, body.brand);
+                    returnSuccess(res, update);
+                } else {
+                    returnProblem(res, err);
+                }
+            });
+        });
+    }
+
+    /**
+     * @deleteBrand deletes your brand
+     * @req {Object} The query from the front-end
+     * @res {Object} The res to the front-end
+     */
+    function deleteBrand(req, res) {
+        let body = req.body;
+        let query = buildQuery(body.brand._id);
+        mongoose.connection.db.collection('brands', function(err, collection) {
+            if(!collection) {
+                return;
+            }
+            collection.remove(query, (err, docs) => {
+                if(!err) {
+                    cache.removeBrand(body.brand._id);
+                    returnSuccess(res, {
+                        sucess: true
+                    });
+                } else {
+                    returnProblem(res, err);
+                }
+            });
+        });
+    }
+
+    /**
      * @createStore creates new store and send it to the db
      * @req {Object} The query from the front-end
      * @res {Object} The res to the front-end
@@ -38,11 +112,6 @@
     function createStore(req, res) {
         let body = req.body;
         let update = buildStoreData(body.store);
-        // validate the input
-        if(!validateInputs(body)) {
-            returnProblem('Wrong input information', res);
-            return;
-        }
         
         mongoose.connection.db.collection('stores', function(err, collection) {
             if(!collection) {
@@ -52,7 +121,7 @@
             collection.insertOne(update, (err, docs) => {
                 if(!err) {
                     cache.addStore(update);
-                    returnSuccess(res, update);
+                    this.createAnalytics(res, update);
                 } else {
                     returnProblem(res, err);
                 }
@@ -107,6 +176,78 @@
                 }
             });
         });
+    }
+
+    /**
+     * @createAnalytics creates new analytics and send it to the db
+     * @req {Object} The query from the front-end
+     * @res {Object} The res to the front-end
+     */
+    function createAnalytics(req, res) {
+        let body = req.body;
+        let update = buildAnalyticsData(body.store);
+        
+        mongoose.connection.db.collection('analytics', function(err, collection) {
+            if(!collection) {
+                return;
+            }
+            // return data about the new store
+            collection.insertOne(update, (err, docs) => {
+                if(!err) {
+                    cache.addAnalytics(update);
+                    returnSuccess(res, update);
+                } else {
+                    returnProblem(res, err);
+                }
+            });
+        });
+    }
+
+    /**
+     * @updateStore updates store and send it to the db
+     * @req {Object} The query from the front-end
+     * @res {Object} The res to the front-end
+     */
+    function updateStore(req, res) {
+        let body = req.body;
+        let query = buildQuery(body.store._id);
+        let update = buildStoreData(body.store);
+        mongoose.connection.db.collection('stores', function(err, collection) {
+            if(!collection) {
+                return;
+            }
+            collection.update(query, update, (err, docs) => {
+                if(!err) {
+                    cache.updateStore(body.store._id, body.store);
+                    returnSuccess(res, update);
+                } else {
+                    returnProblem(res, err);
+                }
+            });
+        });
+    }
+
+    /**
+     * @buildAnalyticsData creates the object that we send to the db
+     * @Store {Object} Store object
+     */
+    function buildAnalyticsData(store) {
+        return {
+            storeId: store._id
+        }
+    }
+
+    /**
+     * @buildBrandData creates the object that we send to the db
+     * @brand {Object} Brand object
+     */
+    function buildBrandData(brand) {
+        return {
+            brandName: brand.brandName,
+            brandDefaultRadius: brand.brandDefaultRadius,
+            notificationDefaultTitle: brand.notificationDefaultTitle,
+            notificationDefaultBody: brand.notificationDefaultBody
+        }
     }
 
     /**
@@ -206,6 +347,9 @@
         connectDb: connectDb,
         createStore: createStore,
         updateStore: updateStore,
-        deleteStore: deleteStore
+        deleteStore: deleteStore,
+        createBrand: createBrand,
+        updateBrand: updateBrand,
+        deleteBrand: deleteBrand,
     };
 }());

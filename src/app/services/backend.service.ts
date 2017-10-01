@@ -70,6 +70,19 @@ export class BackendService {
 			});
 	}
 
+	deleteBrand(brand) {
+		return this.http
+			.post(Config.deleteBrand, {
+				username: this.userData.username,
+				password: this.userData.password,
+				brand: brand
+			})
+			.toPromise()
+			.then((response) => {
+				return response.json()
+			});
+	}
+
 	updateStore(store) {
 		return this.http
 			.post(Config.updateStore, {

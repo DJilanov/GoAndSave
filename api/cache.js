@@ -28,6 +28,31 @@
         brands.push(newBrand);
     }
     /**
+     * @updateBrand it updates brands to the cache
+     * @Object <newBrand> the new brand 
+     */
+    function updateBrand(id, newBrand) {
+        brands.forEach((brand) => {
+            if(brand._id.toString() === id) {
+                brand.brandName = newStore.brandName;
+                brand.brandDefaultRadius = newStore.brandDefaultRadius;
+                brand.notificationDefaultTitle = newStore.notificationDefaultTitle;
+                brand.notificationDefaultBody = newStore.notificationDefaultBody;
+            }
+        })
+    }
+    /**
+     * @removeBrand it removes the brand from the cache
+     * @Strng id of the brand
+     */
+    function removeBrand(id) {
+        brands.forEach((brand, index, array) => {
+            if(brand._id.toString() === id) {
+                array.splice(index, 1);
+            }
+        })
+    }
+    /**
      * @getStores it returns all of the stores that are currently cached
      */
     function getStores() {
@@ -99,15 +124,46 @@
     function setAnalytics(newAnalytic) {
         analytics = newAnalytic;
     }
+    /**
+     * @addAnalytics it add analytic to the cache
+     * @Object <newAnalytic> the new store
+     */
+    function addAnalytics(newAnalytic) {
+        analytics.push(newAnalytic);
+    }
+    /**
+     * @updateStore it updates stores to the cache
+     * @Array <newStore[]> the new stores array
+     */
+    // function updateAnalytics(id, newStore) {
+    //     stores.forEach((store) => {
+    //         if(store._id.toString() === id) {
+    //             store.brandId = newStore.brandId;
+    //             store.storeName = newStore.storeName;
+    //             store.storeAddress = newStore.storeAddress;
+    //             store.customStoreRadius = newStore.customStoreRadius;
+    //             store.lat = newStore.lat;
+    //             store.lng = newStore.lng;
+    //             store.notificationTitle = newStore.notificationTitle;
+    //             store.notificationBody = newStore.notificationBody;
+    //             store.promoStart = newStore.promoStart;
+    //             store.promoEnd = newStore.promoEnd;
+    //         }
+    //     })
+    // }
 
     module.exports = {
+        addBrand: addBrand,
         getBrands: getBrands,
         setBrands: setBrands,
+        updateBrand: updateBrand,
+        removeBrand: removeBrand,
         addStore: addStore,
         getStores: getStores,
         setStores: setStores,
         updateStore: updateStore,
         removeStore: removeStore,
+        addAnalytics: addAnalytics,
         getAnalytics: getAnalytics,
         setAnalytics: setAnalytics,
         returnStoresByBrand: returnStoresByBrand
