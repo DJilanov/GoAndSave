@@ -62,7 +62,7 @@ app.post('/api/login', function(req, res) {
         });
     }
 });
-// when we call from the service we return the companies
+// when we call from the service we return the brands
 app.post('/api/getBrands', function(req, res) {
     if(validator.validateLogin(req.body)) {
         dbFinder.returnAllBrands(req, res);
@@ -72,7 +72,17 @@ app.post('/api/getBrands', function(req, res) {
         });
     }
 });
-// when we call from the service we return the notifications
+// when we call from the service we return the companies
+app.post('/api/updateBrand', function(req, res) {
+    if(validator.validateLogin(req.body)) {
+        dbFinder.returnAllBrands(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
+});
+// when we call from the service we return the stores
 app.post('/api/getStores', function(req, res) {
     if(validator.validateLogin(req.body)) {
         dbFinder.returnAllStores(req, res);
@@ -82,7 +92,7 @@ app.post('/api/getStores', function(req, res) {
         });
     }
 });
-// when we call from the service we return the notifications
+// when we call from the service we return the stores of specific brand
 app.post('/api/getStoresByBrand', function(req, res) {
     if(validator.validateLogin(req.body)) {
         dbFinder.returnStoresByBrand(req, res);
@@ -92,7 +102,27 @@ app.post('/api/getStoresByBrand', function(req, res) {
         });
     }
 });
-// when we call from the service we add the sended notifications
+// when we call from the service we update the store
+app.post('/api/updateStore', function(req, res) {
+    if(validator.validateLogin(req.body)) {
+        dbUpdator.updateStore(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
+});
+// when we call from the service we delete the store
+app.post('/api/deleteStore', function(req, res) {
+    if(validator.validateLogin(req.body)) {
+        dbUpdator.deleteStore(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
+});
+// when we call from the service we add the sended stores to a brand
 app.post('/api/postBrandAndStores', function(req, res) {
     if(validator.validateLogin(req.body)) {
         dbFinder.returnAllCompanies(req, res);

@@ -24,6 +24,9 @@ export class EditStoresComponent {
 
 	public selectedStore = null;
 
+	public success = false;
+	public error = false;
+
 	public updating: boolean = false;
 
 	public companies: Array<Object> = [];
@@ -65,10 +68,32 @@ export class EditStoresComponent {
 
 	updateData() {
 		this.updating = true;
-		this.backendService.getBrands().then(response =>{
+		this.backendService.updateStore({
+			_id: this.selectedStore._id,
+			brandId: this.selectedStore.brandId,
+			storeName: this.storeName,
+			storeAddress: this.storeAddress,
+			customStoreRadius: this.customStoreRadius,
+			lat: this.lat,
+			lng: this.lng,
+			notificationTitle: this.notificationTitle,
+			notificationBody: this.notificationBody,
+			promoStart: this.promoStart,
+			promoEnd: this.promoEnd
+		}).then(response =>{
 			this.updating = false;
-			this.companies = response;
-			this.cachingService.setCompanies(response);
+			this.success = true;
+			// TODO: CHECK FOR ERRORS
+		});
+	}
+
+	deleteStore() {
+		this.updating = true;
+		this.backendService.deleteStore(this.selectedStore).then(response =>{
+			this.updating = false;
+			this.success = true;
+			this.selectedStore = null;
+			// TODO: CHECK FOR ERRORS
 		});
 	}
 }

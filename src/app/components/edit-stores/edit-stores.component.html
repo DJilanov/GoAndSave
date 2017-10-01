@@ -137,10 +137,14 @@
 			</div>
 		</div>
 
+		<div *ngIf="success" class="alert alert-success">Saved</div>
+		<div *ngIf="error" class="alert alert-success">Saved</div>
 
 		<div class="form-group ">
 			<button [disabled]="updating" (click)="updateData()"
 				type="button" class="btn btn-primary btn-lg btn-block login-button">Change Data</button>
+			<button [disabled]="updating" (click)="deleteStore()"
+				type="button" class="btn btn-danger btn-lg btn-block login-button">Delete store</button>
 		</div>
 	</form>
 </div>

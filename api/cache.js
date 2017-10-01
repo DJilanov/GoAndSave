@@ -21,6 +21,13 @@
         brands = newBrand;
     }
     /**
+     * @addBrand it add brand to the cache
+     * @Object <newBrand> the new brand
+     */
+    function addBrand(newBrand) {
+        brands.push(newBrand);
+    }
+    /**
      * @getStores it returns all of the stores that are currently cached
      */
     function getStores() {
@@ -42,6 +49,44 @@
         stores = newStore;
     }
     /**
+     * @addStore it add store to the cache
+     * @Object <newStore> the new store
+     */
+    function addStore(newStore) {
+        stores.push(newStore);
+    }
+    /**
+     * @updateStore it updates stores to the cache
+     * @Array <newStore[]> the new stores array
+     */
+    function updateStore(id, newStore) {
+        stores.forEach((store) => {
+            if(store._id.toString() === id) {
+                store.brandId = newStore.brandId;
+                store.storeName = newStore.storeName;
+                store.storeAddress = newStore.storeAddress;
+                store.customStoreRadius = newStore.customStoreRadius;
+                store.lat = newStore.lat;
+                store.lng = newStore.lng;
+                store.notificationTitle = newStore.notificationTitle;
+                store.notificationBody = newStore.notificationBody;
+                store.promoStart = newStore.promoStart;
+                store.promoEnd = newStore.promoEnd;
+            }
+        })
+    }
+    /**
+     * @removeStore it removes the store from the cache
+     * @Strng id of the store
+     */
+    function removeStore(id) {
+        stores.forEach((store, index, array) => {
+            if(store._id.toString() === id) {
+                array.splice(index, 1);
+            }
+        })
+    }
+    /**
      * @getBrands it returns all of the analytics that are currently cached
      */
     function getAnalytics() {
@@ -58,8 +103,11 @@
     module.exports = {
         getBrands: getBrands,
         setBrands: setBrands,
+        addStore: addStore,
         getStores: getStores,
         setStores: setStores,
+        updateStore: updateStore,
+        removeStore: removeStore,
         getAnalytics: getAnalytics,
         setAnalytics: setAnalytics,
         returnStoresByBrand: returnStoresByBrand

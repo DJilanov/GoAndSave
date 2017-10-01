@@ -10,6 +10,7 @@ export class Config {
     public static get getStoresByBrand():string { return "http://192.168.1.2:8080/api/getStoresByBrand"; }
     public static get updateBrand():string { return "http://192.168.1.2:8080/api/updateBrand"; }
     public static get updateStore():string { return "http://192.168.1.2:8080/api/updateStore"; }
+    public static get deleteStore():string { return "http://192.168.1.2:8080/api/deleteStore"; }
     public static get postBrandAndStores():string { return "http://192.168.1.2:8080/api/postBrandAndStores"; }
     // staging
     // public static get loginUrl():string { return "http://172.16.89.72:8080/api/loginUrl"; }

@@ -31,109 +31,100 @@
     }
 
     /**
-     * @buildData build the data in the way the db is structure
-     * @body {Object} The form data
-     * @TODO: Must be splited to different module for a bigger app architecture
-     */
-    function buildData(body) {
-        let data = {
-            "first_name": body.firstName,
-            "last_name": body.lastName,
-            "email_address": body.emailAddress,
-            "date_of_birth": body.dateOfBirth
-        };
-        return data;
-    }
-
-    /**
-     * @createUser creates new user and send it to the db
+     * @createStore creates new store and send it to the db
      * @req {Object} The query from the front-end
      * @res {Object} The res to the front-end
      */
-    function createUser(req, res) {
+    function createStore(req, res) {
         let body = req.body;
+        let update = buildStoreData(body.store);
         // validate the input
         if(!validateInputs(body)) {
             returnProblem('Wrong input information', res);
             return;
         }
-        let query = buildData(body);
         
-        mongoose.connection.db.collection('users', function(err, collection) {
+        mongoose.connection.db.collection('stores', function(err, collection) {
             if(!collection) {
                 return;
             }
-            // return data about the new user
-            collection.insertOne(query, function(err, docs) {
-                let response = {
-                    id: docs.insertedId.toHexString(),
-                    "firstName": body.firstName,
-                    "lastName": body.lastName,
-                    "emailAddress": body.emailAddress,
-                    "dateOfBirth": body.dateOfBirth
-                };
-                handleCallback(err, res, response, 'create');
+            // return data about the new store
+            collection.insertOne(update, (err, docs) => {
+                if(!err) {
+                    cache.addStore(update);
+                    returnSuccess(res, update);
+                } else {
+                    returnProblem(res, err);
+                }
             });
         });
     }
 
     /**
-     * @updateUser updates user and send it to the db
+     * @updateStore updates store and send it to the db
      * @req {Object} The query from the front-end
      * @res {Object} The res to the front-end
      */
-    function updateUser(req, res) {
-        var body = req.body;
-        // validate the input
-        if(!validateInputs(body)) {
-            returnProblem('Wrong input information', res);
-            return;
-        }
-        var query = buildQuery(body.id);
-        var update = buildData(body);
-        mongoose.connection.db.collection('users', function(err, collection) {
+    function updateStore(req, res) {
+        let body = req.body;
+        let query = buildQuery(body.store._id);
+        let update = buildStoreData(body.store);
+        mongoose.connection.db.collection('stores', function(err, collection) {
             if(!collection) {
                 return;
             }
-            collection.update(query, update, function(err, docs) {
-                handleCallback(err, res, body, 'update');
+            collection.update(query, update, (err, docs) => {
+                if(!err) {
+                    cache.updateStore(body.store._id, body.store);
+                    returnSuccess(res, update);
+                } else {
+                    returnProblem(res, err);
+                }
             });
         });
     }
 
     /**
-     * @deleteUser deletes user and send it to the db
+     * @deleteStore deletes store
      * @req {Object} The query from the front-end
      * @res {Object} The res to the front-end
      */
-    function deleteUser(req, res) {
-        var id = req.param('id');
-        var response = { id: id };
-        var query = buildQuery(id);
-        console.log(query);
-        mongoose.connection.db.collection('users', function(err, collection) {
+    function deleteStore(req, res) {
+        let body = req.body;
+        let query = buildQuery(body.store._id);
+        mongoose.connection.db.collection('stores', function(err, collection) {
             if(!collection) {
                 return;
             }
-            collection.remove(query, function(err, docs) {
-                handleCallback(err, res, response, 'delete');
+            collection.remove(query, (err, docs) => {
+                if(!err) {
+                    cache.removeStore(body.store._id);
+                    returnSuccess(res, {
+                        sucess: true
+                    });
+                } else {
+                    returnProblem(res, err);
+                }
             });
         });
     }
 
     /**
-     * @handleCallback creates new user and send it to the db
-     * @err {Object} Error object from the database
-     * @res {Object} The res to the front-end
-     * @response {Object} The response from the database
-     * @operation {Object} Operation we did to the database
+     * @buildStoreData creates the object that we send to the db
+     * @store {Object} Store object
      */
-    function handleCallback(err, res, response, operation) {
-        if(!err) {
-            cache.changeCompanies(response, operation);
-            returnSuccess(res, response);
-        } else {
-            returnProblem(err, res);
+    function buildStoreData(store) {
+        return {
+            brandId: store.brandId,
+            storeName: store.storeName,
+			storeAddress: store.storeAddress,
+			customStoreRadius: store.customStoreRadius,
+			lat: store.lat,
+			lng: store.lng,
+			notificationTitle: store.notificationTitle,
+			notificationBody: store.notificationBody,
+			promoStart: store.promoStart,
+			promoEnd: store.promoEnd
         }
     }
 
@@ -146,7 +137,7 @@
         res.json({
             done: true,
             reason: null,
-            user: response
+            data: response
         });
     }
 
@@ -157,7 +148,7 @@
      * @info There were 2 options: return 4** with error body or return 200 with reason. I chouse 200 becouse there is no problem
      *          with the back-end... there is problem with your call.. 4** must be returned if there is problem with the API
      */
-    function returnProblem(err, res) {
+    function returnProblem(res, err) {
         res.json({
             done: false,
             reason: err
@@ -212,6 +203,9 @@
 
     module.exports = {
         setCache: setCache,
-        connectDb: connectDb
+        connectDb: connectDb,
+        createStore: createStore,
+        updateStore: updateStore,
+        deleteStore: deleteStore
     };
 }());

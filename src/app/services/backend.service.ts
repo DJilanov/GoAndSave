@@ -57,12 +57,51 @@ export class BackendService {
 			});
 	}
 
-	getStoresByBrand(company) {
+	updateBrand(brand) {
+		return this.http
+			.post(Config.updateBrand , {
+				username: this.userData.username,
+				password: this.userData.password,
+				brand: brand
+			})
+			.toPromise()
+			.then((response) => {
+				return response.json()
+			});
+	}
+
+	updateStore(store) {
+		return this.http
+			.post(Config.updateStore, {
+				username: this.userData.username,
+				password: this.userData.password,
+				store: store
+			})
+			.toPromise()
+			.then((response) => {
+				return response.json()
+			});
+	}
+
+	deleteStore(store) {
+		return this.http
+			.post(Config.deleteStore, {
+				username: this.userData.username,
+				password: this.userData.password,
+				store: store
+			})
+			.toPromise()
+			.then((response) => {
+				return response.json()
+			});
+	}
+
+	getStoresByBrand(brand) {
 		return this.http
 			.post(Config.getStoresByBrand , {
 				username: this.userData.username,
 				password: this.userData.password,
-				brand: company
+				brand: brand
 			})
 			.toPromise()
 			.then((response) => {

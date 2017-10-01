@@ -48,6 +48,20 @@ export class EditBrandsComponent {
 
 	updateData() {
 		this.updating = true;
+		this.backendService.updateBrand({
+			brandName: this.brandName,
+			brandDefaultRadius: this.brandDefaultRadius,
+			notificationDefaultTitle: this.notificationDefaultTitle,
+			notificationDefaultBody: this.notificationDefaultBody
+		}).then(response =>{
+			this.updating = false;
+			this.companies = response;
+			this.cachingService.setCompanies(response);
+		});
+	}
+
+	deleteBrand() {
+		this.updating = true;
 		this.backendService.getBrands().then(response =>{
 			this.updating = false;
 			this.companies = response;
