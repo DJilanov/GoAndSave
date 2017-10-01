@@ -27,6 +27,14 @@
         return brands;
     }
     /**
+     * @returnStoresByBrand it returns all of the stores that are from specific brand
+     */
+    function returnStoresByBrand(brand) {
+        return stores.filter((store) => {
+            return store.brandId == brand._id;
+        });
+    }
+    /**
      * @setStores it sets stores to the cache
      * @Array <newStore[]> the new stores array
      */
@@ -53,6 +61,7 @@
         getStores: getStores,
         setStores: setStores,
         getAnalytics: getAnalytics,
-        setAnalytics: setAnalytics
+        setAnalytics: setAnalytics,
+        returnStoresByBrand: returnStoresByBrand
     };
 }());

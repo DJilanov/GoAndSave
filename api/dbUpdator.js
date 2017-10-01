@@ -3,11 +3,13 @@
  */
 (function() {
     // we use it for creation of new object ids
-    var ObjectId = require('mongodb').ObjectID;
-    var mongoose = require('mongoose');
-    var config = require('./config').getConfig();
-    var validator = require('./validator');
-    var cache = null;
+    let ObjectId = require('mongodb').ObjectID;
+    let mongoose = require('mongoose');
+    // set Promise provider to bluebird
+    mongoose.Promise = require('bluebird');
+    let config = require('./config').getConfig();
+    let validator = require('./validator');
+    let cache = null;
 
     /**
      * @setCache set the cache as local variable
@@ -22,7 +24,7 @@
      * @id {String} The id of the sended user
      */
     function buildQuery(id) {
-        var query = {
+        let query = {
             "_id": new ObjectId(id)
         };
         return query;
@@ -34,7 +36,7 @@
      * @TODO: Must be splited to different module for a bigger app architecture
      */
     function buildData(body) {
-        var data = {
+        let data = {
             "first_name": body.firstName,
             "last_name": body.lastName,
             "email_address": body.emailAddress,
@@ -49,20 +51,21 @@
      * @res {Object} The res to the front-end
      */
     function createUser(req, res) {
-        var body = req.body;
+        let body = req.body;
         // validate the input
         if(!validateInputs(body)) {
             returnProblem('Wrong input information', res);
             return;
         }
-        var query = buildData(body);
+        let query = buildData(body);
+        
         mongoose.connection.db.collection('users', function(err, collection) {
             if(!collection) {
                 return;
             }
             // return data about the new user
             collection.insertOne(query, function(err, docs) {
-                var response = {
+                let response = {
                     id: docs.insertedId.toHexString(),
                     "firstName": body.firstName,
                     "lastName": body.lastName,
@@ -169,13 +172,13 @@
         mongoose.connection.on('connected', function() {
             console.log('[dbConnector]Mongoose default connection open');
             mongoose.connection.db.collection('brands', function(err, collection) {
-                collection.find().toArray(function(err, users) {
-                    cache.setBrands(users);
+                collection.find().toArray(function(err, brands) {
+                    cache.setBrands(brands);
                 });
             });
             mongoose.connection.db.collection('stores', function(err, collection) {
-                collection.find().toArray(function(err, users) {
-                    cache.setStores(users);
+                collection.find().toArray(function(err, stores) {
+                    cache.setStores(stores);
                 });
             });
             mongoose.connection.db.collection('analytics', function(err, collection) {

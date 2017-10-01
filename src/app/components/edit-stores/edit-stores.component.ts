@@ -9,27 +9,25 @@ import { EventBusService } from '../../services/event-bus.service';
 	styleUrls: ['./edit-stores.component.scss']
 })
 export class EditStoresComponent {
+	public storeName = '';
+	public storeAddress = '';
+	public customStoreRadius = 50;
+	public lat = '';
+	public lng = '';
+	public logoFile = '';
+	public notificationTitle = '';
+	public notificationBody = '';
+	public promoStart = new Date();
+	public promoEnd = new Date();
 
-	public selectedCompany = null;
+	public selectedBrand = null;
 
-	public companies: Array<Object> = [
-		{
-			id: '123',
-			brandName: 'test1',
-			brandDefaultRadius: 50,
-			logoUrl: 'test123',
-			notificationDefaultTitle: 'testingtitle',
-			notificationDefaultBody: 'testingbody'
-		},
-		{
-			id: '1234',
-			brandName: 'test2',
-			brandDefaultRadius: 60,
-			logoUrl: 'test125',
-			notificationDefaultTitle: 'testingtitle2',
-			notificationDefaultBody: 'testingbody2'
-		}
-	];
+	public selectedStore = null;
+
+	public updating: boolean = false;
+
+	public companies: Array<Object> = [];
+	public stores: Array<Object> = [];
 
 	constructor(
 		private cachingService: CachingService,
@@ -38,14 +36,39 @@ export class EditStoresComponent {
 	) {
 		this.companies = this.cachingService.getCompanies();
 		if(!this.companies.length) {
-			this.backendService.fetchCompanies().then(response =>{
+			this.backendService.getBrands().then(response =>{
 				this.companies = response;
 				this.cachingService.setCompanies(response);
 			});
 		}
 	}
 
-	onSelect(company) {
-		
+	onSelectBrand(company) {
+		this.selectedBrand = company;
+		this.backendService.getStoresByBrand(company).then(response =>{
+			this.stores = response;
+		});
+	}
+	onSelectStore(store) {
+		this.selectedStore = store;
+		this.storeName = store.storeName;
+		this.storeAddress = store.storeAddress;
+		this.customStoreRadius = store.customStoreRadius;
+		this.lat = store.lat;
+		this.lng = store.lng;
+		this.logoFile = store.logoFile;
+		this.notificationTitle = store.notificationTitle;
+		this.notificationBody = store.notificationBody;
+		this.promoStart = store.promoStart;
+		this.promoEnd = store.promoEnd;
+	}
+
+	updateData() {
+		this.updating = true;
+		this.backendService.getBrands().then(response =>{
+			this.updating = false;
+			this.companies = response;
+			this.cachingService.setCompanies(response);
+		});
 	}
 }

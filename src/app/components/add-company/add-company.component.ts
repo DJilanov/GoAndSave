@@ -24,7 +24,6 @@ export class AddCompanyComponent {
 	}
 
 	updateCompanyData(data) {
-		this.id = data.id;
 		this.brandName = data.brandName;
 		this.brandDefaultRadius = data.brandDefaultRadius;
 		this.logoUrl = data.logoUrl;

@@ -11,3 +11,72 @@
 		<option *ngFor="let c of companies" [ngValue]="c">{{c.brandName}}</option>
 	</select>
 </div>
+
+<div *ngIf="selectedCompany"
+	class="container">
+	<hr />
+	<form class="form-horizontal" method="post" action="#">
+		
+		<div class="form-group">
+			<label for="brandName" class="cols-sm-2 control-label">Brand Name</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="brandName" [disabled]="disableCompany"
+						type="text" class="form-control" name="brandName" id="brandName"  placeholder="Enter your brand name"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="brandDefaultRadius" class="cols-sm-2 control-label">Brand default radius</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="brandDefaultRadius" [disabled]="disableCompany"
+						type="text" class="form-control" name="brandDefaultRadius" id="brandDefaultRadius"  placeholder="Enter your brand default radius"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="logoFile" class="cols-sm-2 control-label">Upload brand image</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="logoFile" [disabled]="disableCompany"
+						type="file" class="form-control" name="logoFile" id="logoFile"  placeholder="Upload your brand image"/>
+				</div>
+				<!-- TODO: Show here the current image that is used into logoUrl  -->
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="notificationDefaultTitle" class="cols-sm-2 control-label">Brand default notification title</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="notificationDefaultTitle" [disabled]="disableCompany"
+						type="text" class="form-control" name="notificationDefaultTitle" id="notificationDefaultTitle"  placeholder="Enter your brand default title"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="notificationDefaultBody" class="cols-sm-2 control-label">Brand default notification body</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="notificationDefaultBody" [disabled]="disableCompany"
+						type="text" class="form-control" name="notificationDefaultBody" id="notificationDefaultBody"  placeholder="Enter your brand default body"/>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="form-group ">
+			<button [disabled]="updating" (click)="updateData()"
+				type="button" class="btn btn-primary btn-lg btn-block login-button">Change Data</button>
+		</div>
+	</form>
+</div>

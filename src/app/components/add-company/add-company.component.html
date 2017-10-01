@@ -8,12 +8,12 @@
 	<form class="form-horizontal" method="post" action="#">
 		
 		<div class="form-group">
-			<label for="id" class="cols-sm-2 control-label">Brand Name</label>
+			<label for="brandName" class="cols-sm-2 control-label">Brand Name</label>
 			<div class="cols-sm-10">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-					<input [(ngModel)]="id" [disabled]="disableCompany"
-						type="text" class="form-control" name="id" id="id"  placeholder="Enter your brand name"/>
+					<input [(ngModel)]="brandName" [disabled]="disableCompany"
+						type="text" class="form-control" name="brandName" id="brandName"  placeholder="Enter your brand name"/>
 				</div>
 			</div>
 		</div>
@@ -37,6 +37,7 @@
 					<input [(ngModel)]="logoFile" [disabled]="disableCompany"
 						type="file" class="form-control" name="logoFile" id="logoFile"  placeholder="Upload your brand image"/>
 				</div>
+				<!-- TODO: Show here the current image that is used into logoUrl  -->
 			</div>
 		</div>
 		

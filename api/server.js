@@ -12,7 +12,7 @@ var cache = require('./cache');
 var dbFinder = require('./dbFinder');
 // used to update our db
 var dbUpdator = require('./dbUpdator');
-// TODO: will be used to validate the login form that we are allowed to work with that
+// used to validate the login form that we are allowed to work with that
 var validator = require('./validator');
 // we connect to the db using the credentials and fetch the db localy
 dbUpdator.connectDb();
@@ -51,7 +51,7 @@ app.get('/api/heartbeat', function(req, res) {
     });
 });
 // when we call from the service we return the users
-app.post('/api/loginUrl', function(req, res) {
+app.post('/api/login', function(req, res) {
     if(validator.validateLogin(req.body)) {
         res.status(200).json({
             success: true
@@ -63,9 +63,9 @@ app.post('/api/loginUrl', function(req, res) {
     }
 });
 // when we call from the service we return the companies
-app.post('/api/companiesUrl', function(req, res) {
+app.post('/api/getBrands', function(req, res) {
     if(validator.validateLogin(req.body)) {
-        dbFinder.returnAllCompanies(req, res);
+        dbFinder.returnAllBrands(req, res);
     } else {
         res.status(401).json({
             success: false
@@ -73,9 +73,19 @@ app.post('/api/companiesUrl', function(req, res) {
     }
 });
 // when we call from the service we return the notifications
-app.post('/api/notificationsUrl', function(req, res) {
+app.post('/api/getStores', function(req, res) {
     if(validator.validateLogin(req.body)) {
-        dbFinder.returnAllCompanies(req, res);
+        dbFinder.returnAllStores(req, res);
+    } else {
+        res.status(401).json({
+            success: false
+        });
+    }
+});
+// when we call from the service we return the notifications
+app.post('/api/getStoresByBrand', function(req, res) {
+    if(validator.validateLogin(req.body)) {
+        dbFinder.returnStoresByBrand(req, res);
     } else {
         res.status(401).json({
             success: false
@@ -83,7 +93,7 @@ app.post('/api/notificationsUrl', function(req, res) {
     }
 });
 // when we call from the service we add the sended notifications
-app.post('/api/postDataUrl', function(req, res) {
+app.post('/api/postBrandAndStores', function(req, res) {
     if(validator.validateLogin(req.body)) {
         dbFinder.returnAllCompanies(req, res);
     } else {

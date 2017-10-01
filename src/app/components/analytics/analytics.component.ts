@@ -38,7 +38,7 @@ export class AnalyticsComponent {
 	) {
 		this.companies = this.cachingService.getCompanies();
 		if(!this.companies.length) {
-			this.backendService.fetchCompanies().then(response =>{
+			this.backendService.getBrands().then(response =>{
 				this.companies = response;
 				this.cachingService.setCompanies(response);
 			});

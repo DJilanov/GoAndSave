@@ -1,6 +1,6 @@
 // used as container for the main constants of the back-end
 (function() {
-    var config = {
+    let config = {
         // official db
         dbAddress: 'mongodb://{{user}}:{{password}}@ds151554.mlab.com:51554/goandsave',
         // used for the back-end

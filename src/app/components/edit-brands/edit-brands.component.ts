@@ -9,27 +9,19 @@ import { EventBusService } from '../../services/event-bus.service';
 	styleUrls: ['./edit-brands.component.scss']
 })
 export class EditBrandsComponent {
+	public id = '';
+	public brandName = '';
+	public brandDefaultRadius = 50;
+	public logoUrl = '';
+	public logoFile = '';
+	public notificationDefaultTitle = '';
+	public notificationDefaultBody = '';
 
 	public selectedCompany = null;
 
-	public companies: Array<Object> = [
-		{
-			id: '123',
-			brandName: 'test1',
-			brandDefaultRadius: 50,
-			logoUrl: 'test123',
-			notificationDefaultTitle: 'testingtitle',
-			notificationDefaultBody: 'testingbody'
-		},
-		{
-			id: '1234',
-			brandName: 'test2',
-			brandDefaultRadius: 60,
-			logoUrl: 'test125',
-			notificationDefaultTitle: 'testingtitle2',
-			notificationDefaultBody: 'testingbody2'
-		}
-	];
+	public updating: boolean = false;
+
+	public companies: Array<Object> = [];
 
 	constructor(
 		private cachingService: CachingService,
@@ -38,7 +30,7 @@ export class EditBrandsComponent {
 	) {
 		this.companies = this.cachingService.getCompanies();
 		if(!this.companies.length) {
-			this.backendService.fetchCompanies().then(response =>{
+			this.backendService.getBrands().then(response =>{
 				this.companies = response;
 				this.cachingService.setCompanies(response);
 			});
@@ -46,6 +38,20 @@ export class EditBrandsComponent {
 	}
 
 	onSelect(company) {
-		
+		this.selectedCompany = company;
+		this.brandName = company.brandName;
+		this.brandDefaultRadius = company.brandDefaultRadius;
+		this.logoUrl = company.logoUrl;
+		this.notificationDefaultTitle = company.notificationDefaultTitle;
+		this.notificationDefaultBody = company.notificationDefaultBody;
+	}
+
+	updateData() {
+		this.updating = true;
+		this.backendService.getBrands().then(response =>{
+			this.updating = false;
+			this.companies = response;
+			this.cachingService.setCompanies(response);
+		});
 	}
 }

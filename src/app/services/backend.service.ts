@@ -6,8 +6,11 @@ import { Config } from './config';
 @Injectable()
 export class BackendService {
 	userData = {
-		username: null,
-		password: null
+		// username: null,
+		// password: null
+		// for testing purposes
+		username: 'admin',
+		password: '12321'
 	}
 
 	constructor(
@@ -26,7 +29,7 @@ export class BackendService {
 
 	login(username, password): Promise<any> {
 		return this.http
-			.post(Config.loginUrl , {
+			.post(Config.login , {
 				username: username,
 				password: password
 			})
@@ -42,9 +45,9 @@ export class BackendService {
 			});
 	}
 
-	fetchCompanies() {
+	getBrands() {
 		return this.http
-			.post(Config.companiesUrl , {
+			.post(Config.getBrands , {
 				username: this.userData.username,
 				password: this.userData.password
 			})
@@ -54,9 +57,22 @@ export class BackendService {
 			});
 	}
 
-	uploadData(data) {
+	getStoresByBrand(company) {
 		return this.http
-			.post(Config.postDataUrl , {
+			.post(Config.getStoresByBrand , {
+				username: this.userData.username,
+				password: this.userData.password,
+				brand: company
+			})
+			.toPromise()
+			.then((response) => {
+				return response.json()
+			});
+	}
+
+	postBrandAndStores(data) {
+		return this.http
+			.post(Config.postBrandAndStores , {
 				username: this.userData.username,
 				password: this.userData.password,
 				data: data

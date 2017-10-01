@@ -43,7 +43,7 @@ export class GridComponent {
 	}
 
 	export(): void {
-		this.backendService.uploadData({
+		this.backendService.postBrandAndStores({
 			company: this.companyData,
 			data: this.excelData
 		})

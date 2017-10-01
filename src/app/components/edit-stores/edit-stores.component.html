@@ -6,8 +6,141 @@
 			<hr />
 		</div>
 	</div> 
-	<label for="brandSelect">Select brand</label>
-	<select name="brandSelect" [(ngModel)]="selectedValue" (ngModelChange)="onSelect($event)">
-		<option *ngFor="let c of companies" [ngValue]="c">{{c.brandName}}</option>
-	</select>
+	<div>
+		<label for="brandSelect">Select brand</label>
+		<select name="brandSelect" [(ngModel)]="selectedBrand" (ngModelChange)="onSelectBrand($event)">
+			<option *ngFor="let c of companies" [ngValue]="c">{{c.brandName}}</option>
+		</select>
+	</div>
+	<div *ngIf="selectedBrand">
+		<label for="selectedStore">Select store</label>
+		<select name="selectedStore" [(ngModel)]="selectedStore" (ngModelChange)="onSelectStore($event)">
+			<option selected value> -- select an option -- </option>
+			<option *ngFor="let c of stores" [ngValue]="c">{{c.storeName}}</option>
+		</select>
+	</div>
+</div>
+
+<div *ngIf="selectedStore"
+	class="container">
+	<hr />
+	<form class="form-horizontal" method="post" action="#">
+		
+		<div class="form-group">
+			<label for="storeName" class="cols-sm-2 control-label">Store Name</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="storeName" [disabled]="disableCompany"
+						type="text" class="form-control" name="storeName" id="storeName"  placeholder="Enter your store name"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="customStoreRadius" class="cols-sm-2 control-label">Store radius ( leave blank for default )</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="customStoreRadius" [disabled]="disableCompany"
+						type="text" class="form-control" name="customStoreRadius" id="customStoreRadius"  placeholder="Enter store radius"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="storeAddress" class="cols-sm-2 control-label">Store address</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="storeAddress" [disabled]="disableCompany"
+						type="text" class="form-control" name="storeAddress" id="storeAddress"  placeholder="Enter your store address"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="promoStart" class="cols-sm-2 control-label">Promo start</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [ngModel]="promoStart | date:'yyyy-MM-dd'" [disabled]="disableCompany"
+						type="date" class="form-control" name="promoStart" id="promoStart"  placeholder="Enter your store promo start date"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="promoEnd" class="cols-sm-2 control-label">Promo end</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [ngModel]="promoEnd | date:'yyyy-MM-dd'" [disabled]="disableCompany"
+						type="date" class="form-control" name="promoEnd" id="promoEnd"  placeholder="Enter your store promo end date"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="logoFile" class="cols-sm-2 control-label">Upload store images</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="logoFile" [disabled]="disableCompany"
+						type="file" class="form-control" name="logoFile" id="logoFile"  placeholder="Upload your brand image"/>
+				</div>
+				<!-- TODO: Show here the current image that is used into logoUrl  -->
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="notificationTitle" class="cols-sm-2 control-label">Store notification title ( leave blank for default )</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="notificationTitle" [disabled]="disableCompany"
+						type="text" class="form-control" name="notificationTitle" id="notificationTitle"  placeholder="Enter your store notification title"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="notificationBody" class="cols-sm-2 control-label">Store notification body ( leave blank for default )</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="notificationBody" [disabled]="disableCompany"
+						type="text" class="form-control" name="notificationBody" id="notificationBody"  placeholder="Enter your store notification body"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="lat" class="cols-sm-2 control-label">Store latitude</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="lat" [disabled]="disableCompany"
+						type="text" class="form-control" name="lat" id="lat"  placeholder="Enter your store latitude"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="lng" class="cols-sm-2 control-label">Store longitude</label>
+			<div class="cols-sm-10">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+					<input [(ngModel)]="lng" [disabled]="disableCompany"
+						type="text" class="form-control" name="lng" id="lng"  placeholder="Enter your store longitude"/>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="form-group ">
+			<button [disabled]="updating" (click)="updateData()"
+				type="button" class="btn btn-primary btn-lg btn-block login-button">Change Data</button>
+		</div>
+	</form>
 </div>
