@@ -121,7 +121,7 @@
             collection.insertOne(update, (err, docs) => {
                 if(!err) {
                     cache.addStore(update);
-                    this.createAnalytics(res, update);
+                    this.createAnalytics(update);
                 } else {
                     returnProblem(res, err);
                 }
@@ -183,9 +183,8 @@
      * @req {Object} The query from the front-end
      * @res {Object} The res to the front-end
      */
-    function createAnalytics(req, res) {
-        let body = req.body;
-        let update = buildAnalyticsData(body.store);
+    function createAnalytics(store) {
+        let update = buildAnalyticsData(store);
         
         mongoose.connection.db.collection('analytics', function(err, collection) {
             if(!collection) {
@@ -195,9 +194,8 @@
             collection.insertOne(update, (err, docs) => {
                 if(!err) {
                     cache.addAnalytics(update);
-                    returnSuccess(res, update);
                 } else {
-                    returnProblem(res, err);
+                    console.log('error:' + err);
                 }
             });
         });
@@ -233,7 +231,8 @@
      */
     function buildAnalyticsData(store) {
         return {
-            storeId: store._id
+            storeId: store._id.toString(),
+            views: []
         }
     }
 
@@ -256,7 +255,7 @@
      */
     function buildStoreData(store) {
         return {
-            brandId: store.brandId,
+            brandId: store.brandId.toString(),
             storeName: store.storeName,
 			storeAddress: store.storeAddress,
 			customStoreRadius: store.customStoreRadius,
@@ -266,6 +265,74 @@
 			notificationBody: store.notificationBody,
 			promoStart: store.promoStart,
 			promoEnd: store.promoEnd
+        }
+    }
+
+    /**
+     * @buildStoreDataFromArray creates the object that we send to the db
+     * @store {Object} Store object
+     */
+    function buildStoreDataFromArray(store) {
+        return {
+            storeName: store[2],
+			storeAddress: store[1],
+			customStoreRadius: store[0],
+			lat: store[8],
+			lng: store[7],
+			notificationTitle: store[5],
+			notificationBody: store[6],
+			promoStart: store[3],
+			promoEnd: store[4]
+        }
+    }
+
+    /**
+     * @handleBrandAndStores handles the making new stores
+     * @req {Object} The req of the front-end
+     * @res {Object} The response to the front-end
+     */
+    function handleBrandAndStores(req, res) {
+        let body = req.body;
+        let brand = body.data.brand;
+        let stores = body.data.stores;
+        let self = this;
+        if(brand.new) {
+            // mongoose.connection.db.collection('stores', function(err, collection) {
+            //     if(!collection) {
+            //         return;
+            //     }
+            //     collection.update(query, update, (err, docs) => {
+            //         if(!err) {
+            //             cache.updateStore(body.store._id, body.store);
+            //             returnSuccess(res, update);
+            //         } else {
+            //             returnProblem(res, err);
+            //         }
+            //     });
+            // });
+        } else {
+            mongoose.connection.db.collection('stores', function(err, collection) {
+                if(!collection) {
+                    return;
+                }
+                stores.forEach((store, index, array) => {
+                    let storeData = buildStoreDataFromArray(store)
+                    storeData.brandId = brand._id;
+                    collection.insertOne(storeData, (err, docs) => {
+                        if(!err) {
+                            cache.addStore(storeData);
+                            self.createAnalytics(storeData);
+                        } else {
+                            returnProblem(res, err);
+                        }
+                        if(!array[index + 1]) {
+                            returnSuccess(res, {
+                                sucess: true
+                            });
+                        }
+                    });
+                });
+            });
         }
     }
 
@@ -351,5 +418,7 @@
         createBrand: createBrand,
         updateBrand: updateBrand,
         deleteBrand: deleteBrand,
+        createAnalytics: createAnalytics,
+        handleBrandAndStores: handleBrandAndStores
     };
 }());

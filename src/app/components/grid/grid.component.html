@@ -3,11 +3,16 @@
 	<div *ngIf="excelData[0]">
 		<table class="sjs-table">
 			<tr>
-				<th>Store Name</th>
 				<th>Store Radius</th>
-				<th>Store Logo</th>
+				<th>Store Address</th>
+				<th>Store Name</th>
+				<th>Date start</th>
+				<th>Date end</th>
 				<th>Notification Title</th>
 				<th>Notification Body</th>
+				<th>lng</th>
+				<th>lat</th>
+				<th>Upload custom image</th>
 			</tr>
 			<tr *ngFor="let row of excelData">
 				<td *ngFor="let val of row">

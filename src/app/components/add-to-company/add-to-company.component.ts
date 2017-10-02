@@ -12,24 +12,7 @@ export class AddТоCompanyComponent {
 
 	public selectedCompany = null;
 
-	public companies: Array<Object> = [
-		{
-			id: '123',
-			brandName: 'test1',
-			brandDefaultRadius: 50,
-			logoUrl: 'test123',
-			notificationDefaultTitle: 'testingtitle',
-			notificationDefaultBody: 'testingbody'
-		},
-		{
-			id: '1234',
-			brandName: 'test2',
-			brandDefaultRadius: 60,
-			logoUrl: 'test125',
-			notificationDefaultTitle: 'testingtitle2',
-			notificationDefaultBody: 'testingbody2'
-		}
-	];
+	public companies: Array<Object> = [];
 
 	constructor(
 		private cachingService: CachingService,

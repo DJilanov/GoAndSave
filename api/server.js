@@ -135,7 +135,7 @@ app.post('/api/deleteStore', function(req, res) {
 // when we call from the service we add the sended stores to a brand
 app.post('/api/postBrandAndStores', function(req, res) {
     if(validator.validateLogin(req.body)) {
-        dbFinder.returnAllCompanies(req, res);
+        dbUpdator.handleBrandAndStores(req, res);
     } else {
         res.status(401).json({
             success: false

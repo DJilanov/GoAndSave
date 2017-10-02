@@ -44,8 +44,7 @@ export class AddCompanyComponent {
 			brandDefaultRadius: this.brandDefaultRadius,
 			logoUrl: this.logoUrl,
 			notificationDefaultTitle: this.notificationDefaultTitle,
-			notificationDefaultBody: this.notificationDefaultBody,
-			newCompany: true
+			notificationDefaultBody: this.notificationDefaultBody
 		});
 	}
 
