@@ -39,7 +39,7 @@
         let body = req.body;
         let update = buildBrandData(body.brand);
         
-        mongoose.connection.db.collection('brands', function(err, collection) {
+        mongoose.connection.db.collection('brands', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -64,7 +64,7 @@
         let body = req.body;
         let query = buildQuery(body.brand._id);
         let update = buildBrandData(body.brand);
-        mongoose.connection.db.collection('brands', function(err, collection) {
+        mongoose.connection.db.collection('brands', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -87,7 +87,7 @@
     function deleteBrand(req, res) {
         let body = req.body;
         let query = buildQuery(body.brand._id);
-        mongoose.connection.db.collection('brands', function(err, collection) {
+        mongoose.connection.db.collection('brands', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -113,7 +113,7 @@
         let body = req.body;
         let update = buildStoreData(body.store);
         
-        mongoose.connection.db.collection('stores', function(err, collection) {
+        mongoose.connection.db.collection('stores', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -138,7 +138,7 @@
         let body = req.body;
         let query = buildQuery(body.store._id);
         let update = buildStoreData(body.store);
-        mongoose.connection.db.collection('stores', function(err, collection) {
+        mongoose.connection.db.collection('stores', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -161,7 +161,7 @@
     function deleteStore(req, res) {
         let body = req.body;
         let query = buildQuery(body.store._id);
-        mongoose.connection.db.collection('stores', function(err, collection) {
+        mongoose.connection.db.collection('stores', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -186,7 +186,7 @@
     function createAnalytics(store) {
         let update = buildAnalyticsData(store);
         
-        mongoose.connection.db.collection('analytics', function(err, collection) {
+        mongoose.connection.db.collection('analytics', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -210,7 +210,7 @@
         let body = req.body;
         let query = buildQuery(body.store._id);
         let update = buildStoreData(body.store);
-        mongoose.connection.db.collection('stores', function(err, collection) {
+        mongoose.connection.db.collection('stores', (err, collection) => {
             if(!collection) {
                 return;
             }
@@ -311,7 +311,7 @@
             //     });
             // });
         } else {
-            mongoose.connection.db.collection('stores', function(err, collection) {
+            mongoose.connection.db.collection('stores', (err, collection) => {
                 if(!collection) {
                     return;
                 }
@@ -368,38 +368,38 @@
      */
     function connectDb() {
        // we cache the product list when we open the back-end for faster working speed
-        mongoose.connection.on('connected', function() {
+        mongoose.connection.on('connected', () => {
             console.log('[dbConnector]Mongoose default connection open');
-            mongoose.connection.db.collection('brands', function(err, collection) {
-                collection.find().toArray(function(err, brands) {
+            mongoose.connection.db.collection('brands', (err, collection) => {
+                collection.find().toArray((err, brands) => {
                     cache.setBrands(brands);
                 });
             });
-            mongoose.connection.db.collection('stores', function(err, collection) {
-                collection.find().toArray(function(err, stores) {
+            mongoose.connection.db.collection('stores', (err, collection) => {
+                collection.find().toArray((err, stores) => {
                     cache.setStores(stores);
                 });
             });
-            mongoose.connection.db.collection('analytics', function(err, collection) {
-                collection.find().toArray(function(err, analytics) {
+            mongoose.connection.db.collection('analytics', (err, collection) => {
+                collection.find().toArray((err, analytics) => {
                     cache.setAnalytics(analytics);
                 });
             });
         });
 
         // If the connection throws an error
-        mongoose.connection.on('error', function(err) {
+        mongoose.connection.on('error', (err) => {
             console.log('[dbConnector]Mongoose default connection error: ' + err);
         });
 
         // When the connection is disconnected
-        mongoose.connection.on('disconnected', function() {
+        mongoose.connection.on('disconnected', () => {
             console.log('[dbConnector]Mongoose default connection disconnected');
         });
 
         // If the Node process ends, close the Mongoose connection
-        process.on('SIGINT', function() {
-            mongoose.connection.close(function() {
+        process.on('SIGINT', () => {
+            mongoose.connection.close(() => {
                 console.log('[dbConnector]Mongoose default connection disconnected through app termination');
                 process.exit(0);
             });
