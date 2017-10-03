@@ -6,8 +6,17 @@
 			<hr />
 		</div>
 	</div> 
-	<label for="brandSelect">Select brand</label>
-	<select name="brandSelect" [(ngModel)]="selectedValue" (ngModelChange)="onSelect($event)">
-		<option *ngFor="let c of companies" [ngValue]="c">{{c.brandName}}</option>
-	</select>
+	<div>
+		<label for="brandSelect">Select brand</label>
+		<select name="brandSelect" [(ngModel)]="selectedBrand" (ngModelChange)="onSelectBrand($event)">
+			<option *ngFor="let c of companies" [ngValue]="c">{{c.brandName}}</option>
+		</select>
+	</div>
+	<div *ngIf="selectedBrand">
+		<label for="selectedStore">Select store</label>
+		<select name="selectedStore" [(ngModel)]="selectedStore" (ngModelChange)="onSelectStore($event)">
+			<option selected value> -- select an option -- </option>
+			<option *ngFor="let c of stores" [ngValue]="c">{{c.storeName}}</option>
+		</select>
+	</div>
 </div>
