@@ -22,5 +22,6 @@ export class CachingService {
 
     public setCompanies(companies) {
         this.companies = companies;
+        this.eventBusService.emitFetchedNewCompanies({});
     }
 }

@@ -26,6 +26,9 @@ export class AddТоCompanyComponent {
 				this.cachingService.setCompanies(response);
 			});
 		}
+        this.eventBusService.fetchedNewCompanies.subscribe((data) => {
+			this.companies = this.cachingService.getCompanies();
+		});
 	}
 
 	onSelect(company) {

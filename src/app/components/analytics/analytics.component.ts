@@ -28,24 +28,24 @@ export class AnalyticsComponent {
 		}
 	}
 
-	onSelectBrand(company) {
-		this.selectedBrand = company;
-		this.backendService.getStoresByBrand(company).then(response =>{
-			this.stores = response;
-		});
-	}
+	// onSelectBrand(company) {
+	// 	this.selectedBrand = company;
+	// 	this.backendService.getStoresByBrand(company).then(response =>{
+	// 		this.stores = response;
+	// 	});
+	// }
 	
-	onSelectStore(store) {
-		this.selectedStore = store;
-		this.storeName = store.storeName;
-		this.storeAddress = store.storeAddress;
-		this.customStoreRadius = store.customStoreRadius;
-		this.lat = store.lat;
-		this.lng = store.lng;
-		this.logoFile = store.logoFile;
-		this.notificationTitle = store.notificationTitle;
-		this.notificationBody = store.notificationBody;
-		this.promoStart = store.promoStart;
-		this.promoEnd = store.promoEnd;
-	}
+	// onSelectStore(store) {
+	// 	this.selectedStore = store;
+	// 	this.storeName = store.storeName;
+	// 	this.storeAddress = store.storeAddress;
+	// 	this.customStoreRadius = store.customStoreRadius;
+	// 	this.lat = store.lat;
+	// 	this.lng = store.lng;
+	// 	this.logoFile = store.logoFile;
+	// 	this.notificationTitle = store.notificationTitle;
+	// 	this.notificationBody = store.notificationBody;
+	// 	this.promoStart = store.promoStart;
+	// 	this.promoEnd = store.promoEnd;
+	// }
 }

@@ -8,11 +8,13 @@ import { Injectable, EventEmitter } from '@angular/core';
 export class EventBusService {
 
     public excelDataEmitter: EventEmitter<any>;
+    public fetchedNewCompanies: EventEmitter<any>;
     public companySelectEmitter: EventEmitter<any>;
     public excelDataChangeEmitter: EventEmitter<any>;
 
     constructor() {
         this.excelDataEmitter = new EventEmitter();
+        this.fetchedNewCompanies = new EventEmitter();
         this.companySelectEmitter = new EventEmitter();
         this.excelDataChangeEmitter = new EventEmitter();
     }
@@ -27,5 +29,9 @@ export class EventBusService {
 
     public emitExcelDataChange(data) {
         this.excelDataChangeEmitter.emit(data);
+    }
+
+    public emitFetchedNewCompanies(data) {
+        this.fetchedNewCompanies.emit(data);
     }
 }

@@ -54,6 +54,9 @@ export class BackendService {
 			.toPromise()
 			.then((response) => {
 				return response.json()
+			})
+			.catch((error) => {
+				alert('Error occured connecting to the server');
 			});
 	}
 
@@ -67,6 +70,9 @@ export class BackendService {
 			.toPromise()
 			.then((response) => {
 				return response.json()
+			})
+			.catch((error) => {
+				alert('Error occured connecting to the server');
 			});
 	}
 
@@ -80,6 +86,9 @@ export class BackendService {
 			.toPromise()
 			.then((response) => {
 				return response.json()
+			})
+			.catch((error) => {
+				alert('Error occured connecting to the server');
 			});
 	}
 
@@ -93,6 +102,9 @@ export class BackendService {
 			.toPromise()
 			.then((response) => {
 				return response.json()
+			})
+			.catch((error) => {
+				alert('Error occured connecting to the server');
 			});
 	}
 
@@ -106,6 +118,9 @@ export class BackendService {
 			.toPromise()
 			.then((response) => {
 				return response.json()
+			})
+			.catch((error) => {
+				alert('Error occured connecting to the server');
 			});
 	}
 
@@ -119,6 +134,9 @@ export class BackendService {
 			.toPromise()
 			.then((response) => {
 				return response.json()
+			})
+			.catch((error) => {
+				alert('Error occured connecting to the server');
 			});
 	}
 
@@ -132,6 +150,9 @@ export class BackendService {
 			.toPromise()
 			.then((response) => {
 				return response.json()
+			})
+			.catch((error) => {
+				alert('Error occured connecting to the server');
 			});
 	}
 }

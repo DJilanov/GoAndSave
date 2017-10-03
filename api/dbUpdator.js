@@ -112,6 +112,7 @@
     function createStore(req, res) {
         let body = req.body;
         let update = buildStoreData(body.store);
+        update.lastUpdate = new Date();
         
         mongoose.connection.db.collection('stores', (err, collection) => {
             if(!collection) {
@@ -138,6 +139,8 @@
         let body = req.body;
         let query = buildQuery(body.store._id);
         let update = buildStoreData(body.store);
+        update.lastUpdate = new Date();
+
         mongoose.connection.db.collection('stores', (err, collection) => {
             if(!collection) {
                 return;
@@ -297,43 +300,59 @@
         let stores = body.data.stores;
         let self = this;
         if(brand.new) {
-            // mongoose.connection.db.collection('stores', function(err, collection) {
-            //     if(!collection) {
-            //         return;
-            //     }
-            //     collection.update(query, update, (err, docs) => {
-            //         if(!err) {
-            //             cache.updateStore(body.store._id, body.store);
-            //             returnSuccess(res, update);
-            //         } else {
-            //             returnProblem(res, err);
-            //         }
-            //     });
-            // });
-        } else {
-            mongoose.connection.db.collection('stores', (err, collection) => {
+            mongoose.connection.db.collection('brands', (err, collection) => {
                 if(!collection) {
                     return;
                 }
-                stores.forEach((store, index, array) => {
-                    let storeData = buildStoreDataFromArray(store)
-                    storeData.brandId = brand._id;
-                    collection.insertOne(storeData, (err, docs) => {
-                        if(!err) {
-                            cache.addStore(storeData);
-                            self.createAnalytics(storeData);
-                        } else {
-                            returnProblem(res, err);
-                        }
-                        if(!array[index + 1]) {
-                            returnSuccess(res, {
-                                sucess: true
-                            });
-                        }
-                    });
+                // return data about the new brand
+                collection.insertOne(brand, (err, docs) => {
+                    if(!err) {
+                        brand._id = docs["ops"][0]["_id"].toString();
+                        cache.addBrand(brand);
+                        self.addStoresToBrand(req, res, brand._id);
+                    } else {
+                        returnProblem(res, err);
+                    }
                 });
             });
+        } else {
+            self.addStoresToBrand(req, res);
         }
+    }
+
+    /**
+     * @addStoresToBrand add stores to brand
+     * @req {Object} The req of the front-end
+     * @res {Object} The response to the front-end
+     */
+    function addStoresToBrand(req, res, id) {
+        let body = req.body;
+        let brand = body.data.brand;
+        let stores = body.data.stores;
+        let self = this;
+        mongoose.connection.db.collection('stores', (err, collection) => {
+            if(!collection) {
+                return;
+            }
+            stores.forEach((store, index, array) => {
+                let storeData = buildStoreDataFromArray(store)
+                storeData.brandId = id || brand._id;
+                storeData.lastUpdate = new Date();
+                collection.insertOne(storeData, (err, docs) => {
+                    if(!err) {
+                        cache.addStore(storeData);
+                        self.createAnalytics(storeData);
+                    } else {
+                        returnProblem(res, err);
+                    }
+                    if(!array[index + 1]) {
+                        returnSuccess(res, {
+                            sucess: true
+                        });
+                    }
+                });
+            });
+        });
     }
 
     /**
@@ -419,6 +438,7 @@
         updateBrand: updateBrand,
         deleteBrand: deleteBrand,
         createAnalytics: createAnalytics,
+        addStoresToBrand: addStoresToBrand,
         handleBrandAndStores: handleBrandAndStores
     };
 }());

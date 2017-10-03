@@ -94,6 +94,9 @@ export class EditStoresComponent {
 			this.success = true;
 			this.selectedStore = null;
 			// TODO: CHECK FOR ERRORS
+			this.backendService.getStoresByBrand(this.selectedBrand).then(response =>{
+				this.stores = response;
+			});
 		});
 	}
 }

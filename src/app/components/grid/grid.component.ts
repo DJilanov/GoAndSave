@@ -63,6 +63,12 @@ export class GridComponent {
 		this.backendService.postBrandAndStores({
 			brand: this.companyData,
 			stores: this.excelData
+		}).then((response) => {
+			alert('success');
+			this.backendService.getBrands().then(response =>{
+				this.companies = response;
+				this.cachingService.setCompanies(response);
+			});
 		})
 	}
 }

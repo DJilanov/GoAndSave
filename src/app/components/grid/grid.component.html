@@ -12,15 +12,11 @@
 				<th>Notification Body</th>
 				<th>lng</th>
 				<th>lat</th>
-				<th>Upload custom image</th>
 			</tr>
 			<tr *ngFor="let row of excelData">
 				<td *ngFor="let val of row">
 					{{val}}
 				</td>
-				 <td (click)="remove(row[0])">
-					Change Store Logo
-				</td> 
 			</tr>
 		</table>
 		<button (click)="export()" class="btn btn-primary btn-lg btn-block export">Export to back-end!</button>
