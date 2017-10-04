@@ -19,6 +19,20 @@ dbUpdator.connectDb();
 dbFinder.setCache(cache);
 dbUpdator.setCache(cache);
 // this will let us get nv.PORT || 8080;        // set our port
+// we set the multer
+const multer  = require('multer');
+const fs = require('fs');
+const config = require('./config').getConfig();
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname + config.relativeImageFolder)
+  },
+  filename: function (req, file, cb) {
+    let name = file.originalname.replace('.jpg', '.png');
+    cb(null, name) //Appending .png
+  }
+});
+const upload = multer({ storage: storage });
 
 var port = process.env.PORT || 8080; // set our port
 
@@ -73,9 +87,10 @@ app.post('/api/getBrands', function(req, res) {
     }
 });
 // when we call from the service we return the companies
-app.post('/api/updateBrand', function(req, res) {
+let brandImageUpload = upload.fields([{ name: 'file' }]);
+app.post('/api/updateBrand', brandImageUpload, function(req, res) {
     if(validator.validateLogin(req.body)) {
-        dbFinder.returnAllBrands(req, res);
+        dbUpdator.updateBrand(req, res);
     } else {
         res.status(401).json({
             success: false

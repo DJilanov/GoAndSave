@@ -60,20 +60,34 @@ export class BackendService {
 			});
 	}
 
-	updateBrand(brand) {
-		return this.http
-			.post(Config.updateBrand , {
-				username: this.userData.username,
-				password: this.userData.password,
-				brand: brand
-			})
-			.toPromise()
-			.then((response) => {
-				return response.json()
-			})
-			.catch((error) => {
-				alert('Error occured connecting to the server');
+	updateBrand(brand, files) {
+		return new Promise((resolve, reject) => {
+			let xhr:XMLHttpRequest = new XMLHttpRequest();
+			xhr.onreadystatechange = () => {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						resolve(JSON.parse(xhr.response));
+					} else {
+						reject(xhr.response);
+					}
+				}
+			};
+
+			xhr.open('POST', Config.updateBrand, true);
+			let formData = new FormData();
+			files.forEach((file, index) => {
+				formData.append("file", file, file.name);
 			});
+			
+			formData.append("brand", JSON.stringify(brand));
+			formData.append("username", this.userData.username);
+			formData.append("password", this.userData.password);
+			xhr.send(formData);
+		})
+		.catch((error) => {
+			debugger;
+			alert('Error occured connecting to the server');
+		});
 	}
 
 	deleteBrand(brand) {

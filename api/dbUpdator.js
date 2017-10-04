@@ -61,16 +61,25 @@
      * @res {Object} The res to the front-end
      */
     function updateBrand(req, res) {
-        let body = req.body;
-        let query = buildQuery(body.brand._id);
-        let update = buildBrandData(body.brand);
+        let brand = safelyParseJSON(req.body.brand);
+        let query = buildQuery(brand._id);
+        let update = buildBrandData(brand);
+        if(req.files.file) {
+            if(!update.images) {
+                update.images = [];
+            }
+            req.files.file.forEach((file, index, array) => {
+                wordsArray = file.originalname.split('.');
+                update.images.push(file.filename)
+            })
+        }
         mongoose.connection.db.collection('brands', (err, collection) => {
             if(!collection) {
                 return;
             }
-            collection.update(query, update, (err, docs) => {
+            collection.update(query, update, {upsert: true}, (err, docs) => {
                 if(!err) {
-                    cache.updateBrand(body.brand._id, body.brand);
+                    cache.updateBrand(brand._id, brand);
                     returnSuccess(res, update);
                 } else {
                     returnProblem(res, err);
@@ -355,6 +364,29 @@
         });
     }
 
+    function safelyParseJSON (json) {
+        let parsed
+        try {
+            parsed = JSON.parse(json)
+        } catch (e) {
+            // Oh well, but whatever...
+        }
+
+        return parsed // Could be undefined!
+    }
+
+    /**
+     * @copyImages copy the images to the correct folder
+     * @files {Array} Images from the FE
+     */
+    function copyImages(files) {
+        if(files.file) {
+            for(let otherImagesCounter = 0; otherImagesCounter < files.file.length; otherImagesCounter++) { 
+                imageUpdator.resizeImage(files.file[otherImagesCounter]);
+            }
+        }
+    }
+
     /**
      * @returnSuccess returns success data to the front-end
      * @res {Object} The res to the front-end
@@ -439,6 +471,9 @@
         deleteBrand: deleteBrand,
         createAnalytics: createAnalytics,
         addStoresToBrand: addStoresToBrand,
-        handleBrandAndStores: handleBrandAndStores
+        handleBrandAndStores: handleBrandAndStores,
+
+        safelyParseJSON: safelyParseJSON,
+        copyImages: copyImages
     };
 }());

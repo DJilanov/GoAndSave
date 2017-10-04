@@ -45,7 +45,8 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
 					<input [(ngModel)]="logoFile" [disabled]="disableCompany"
-						type="file" class="form-control" name="logoFile" id="logoFile"  placeholder="Upload your brand image"/>
+						type="file" multiple (change)="onFileUpload($event)"
+						class="form-control" name="logoFile" id="logoFile"  placeholder="Upload your brand image"/>
 				</div>
 				<!-- TODO: Show here the current image that is used into logoUrl  -->
 			</div>

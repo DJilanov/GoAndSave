@@ -17,11 +17,13 @@ export class EditBrandsComponent {
 	public notificationDefaultTitle = '';
 	public notificationDefaultBody = '';
 
+	public imagesArray = [];
+
 	public selectedCompany = null;
 
 	public updating: boolean = false;
 
-	public companies: Array<Object> = [];
+	public companies;
 
 	constructor(
 		private cachingService: CachingService,
@@ -44,16 +46,21 @@ export class EditBrandsComponent {
 		this.logoUrl = company.logoUrl;
 		this.notificationDefaultTitle = company.notificationDefaultTitle;
 		this.notificationDefaultBody = company.notificationDefaultBody;
+
+		this.imagesArray = company.imagesArray || [];
 	}
 
 	updateData() {
 		this.updating = true;
-		this.backendService.updateBrand({
-			brandName: this.brandName,
-			brandDefaultRadius: this.brandDefaultRadius,
-			notificationDefaultTitle: this.notificationDefaultTitle,
-			notificationDefaultBody: this.notificationDefaultBody
-		}).then(response =>{
+		this.backendService.updateBrand(
+			{
+				brandName: this.brandName,
+				brandDefaultRadius: this.brandDefaultRadius,
+				notificationDefaultTitle: this.notificationDefaultTitle,
+				notificationDefaultBody: this.notificationDefaultBody
+			}, 
+			this.imagesArray
+		).then(response =>{
 			this.updating = false;
 			this.companies = response;
 			this.cachingService.setCompanies(response);
@@ -69,5 +76,12 @@ export class EditBrandsComponent {
 				this.cachingService.setCompanies(response);
 			});
 		});
+	}
+
+	onFileUpload(event) {
+		let files = event.currentTarget.files;
+		for(let fileCounter = 0; fileCounter < files.length; fileCounter++) {
+			this.imagesArray.push(files[fileCounter]);
+		}
 	}
 }

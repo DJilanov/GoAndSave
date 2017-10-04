@@ -3,6 +3,7 @@
     let config = {
         // official db
         dbAddress: 'mongodb://{{user}}:{{password}}@ds151554.mlab.com:51554/goandsave',
+        relativeImageFolder: '/../uploads/',
         // used for the back-end
         dbUser: 'admin',
         dbPassword: '12321',
