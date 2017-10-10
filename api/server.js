@@ -34,7 +34,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-var port = process.env.PORT || 8080; // set our port
+var port = process.env.PORT || 9090; // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -106,6 +106,10 @@ app.post('/api/deleteBrand', function(req, res) {
             success: false
         });
     }
+});
+// when we call from the service we delete the brand
+app.post('/api/getLatestChanges', function(req, res) {
+    dbUpdator.getLatestChanges(req, res);
 });
 // when we call from the service we return the stores
 app.post('/api/getStores', function(req, res) {

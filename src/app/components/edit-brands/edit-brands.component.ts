@@ -70,7 +70,7 @@ export class EditBrandsComponent {
 	deleteBrand() {
 		this.updating = true;
 		this.backendService.deleteBrand(this.selectedCompany).then(response =>{
-			this.backendService.getBrands().then(response =>{
+			this.backendService.getBrands().then(response => {
 				this.updating = false;
 				this.companies = response;
 				this.cachingService.setCompanies(response);

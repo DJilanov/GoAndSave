@@ -364,6 +364,13 @@
         });
     }
 
+    function getLatestChanges(req, res) {
+        let body = req.body;
+        returnSuccess(res, {
+            changes: cache.getLatestChanges(new Date(body.lastUpdate))
+        });
+    }
+
     function safelyParseJSON (json) {
         let parsed
         try {
@@ -474,6 +481,7 @@
         handleBrandAndStores: handleBrandAndStores,
 
         safelyParseJSON: safelyParseJSON,
-        copyImages: copyImages
+        copyImages: copyImages,
+        getLatestChanges: getLatestChanges
     };
 }());

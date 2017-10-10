@@ -112,6 +112,14 @@
         })
     }
     /**
+     * @getLatestChanges it returns all of the changes from the back-end
+     */
+    function getLatestChanges(date) {
+        return stores.filter((store, index, array) => {
+           return store.lastUpdate > date;
+        });
+    }
+    /**
      * @getBrands it returns all of the analytics that are currently cached
      */
     function getAnalytics() {
@@ -166,6 +174,7 @@
         addAnalytics: addAnalytics,
         getAnalytics: getAnalytics,
         setAnalytics: setAnalytics,
+        getLatestChanges: getLatestChanges,
         returnStoresByBrand: returnStoresByBrand
     };
 }());
